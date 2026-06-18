@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omkar Portfolio</title>
+
+  <!-- FONT AWESOME -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#0f172a;
+      color:white;
+      line-height:1.6;
+    }
+
+    /* NAVBAR */
+
+    nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      background:#111827;
+      padding:15px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      z-index:1000;
+      box-shadow:0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    nav h1{
+      color:#38bdf8;
+      font-size:28px;
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      gap:25px;
+    }
+
+    nav ul li a{
+      text-decoration:none;
+      color:white;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    nav ul li a:hover{
+      color:#38bdf8;
+    }
+
+    /* HERO */
+
+    .hero{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      text-align:center;
+      padding:20px;
+      background:linear-gradient(to right,#0f172a,#1e293b);
+    }
+
+    .hero img{
+      width:190px;
+      height:190px;
+      border-radius:50%;
+      object-fit:cover;
+      border:5px solid #38bdf8;
+      margin-bottom:20px;
+      box-shadow:0 0 25px #38bdf8;
+      animation:float 3s infinite ease-in-out;
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0);}
+      50%{transform:translateY(-10px);}
+      100%{transform:translateY(0);}
+    }
+
+    .hero h2{
+      font-size:50px;
+      margin-bottom:10px;
+    }
+
+    .hero span{
+      color:#38bdf8;
+    }
+
+    .hero p{
+      color:#cbd5e1;
+      margin-bottom:25px;
+      max-width:700px;
+    }
+
+    .btn{
+      padding:12px 25px;
+      background:#38bdf8;
+      color:black;
+      border-radius:30px;
+      text-decoration:none;
+      font-weight:bold;
+      transition:0.3s;
+      display:inline-block;
+    }
+
+    .btn:hover{
+      background:white;
+      transform:scale(1.05);
+    }
+
+    section{
+      padding:90px 8%;
+    }
+
+    .title{
+      text-align:center;
+      margin-bottom:50px;
+      font-size:40px;
+      color:#38bdf8;
+    }
+
+    /* ABOUT */
+
+    .about{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:40px;
+      align-items:center;
+    }
+
+    .about img{
+      width:100%;
+      border-radius:20px;
+    }
+
+    .about-text p{
+      color:#cbd5e1;
+      margin-bottom:15px;
+    }
+
+    /* SKILLS */
+
+    .skills-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:20px;
+    }
+
+    .skill{
+      background:#1e293b;
+      padding:25px;
+      border-radius:15px;
+      text-align:center;
+      transition:0.3s;
+    }
+
+    .skill:hover{
+      transform:translateY(-8px);
+      background:#334155;
+    }
+
+    .skill i{
+      font-size:40px;
+      color:#38bdf8;
+      margin-bottom:10px;
+    }
+
+    /* PROJECTS */
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+    }
+
+    .project-card{
+      background:#1e293b;
+      border-radius:15px;
+      overflow:hidden;
+      transition:0.3s;
+    }
+
+    .project-card:hover{
+      transform:translateY(-10px);
+    }
+
+    .project-card img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+    }
+
+    .project-content{
+      padding:20px;
+    }
+
+    .project-content p{
+      color:#cbd5e1;
+      margin:10px 0;
+    }
+
+    /* GALLERY */
+
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+    }
+
+    .gallery img{
+      width:100%;
+      height:250px;
+      object-fit:cover;
+      border-radius:15px;
+      transition:0.4s;
+      cursor:pointer;
+    }
+
+    .gallery img:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 20px #38bdf8;
+    }
+
+    /* CONTACT */
+
+    .contact{
+      text-align:center;
+    }
+
+    .contact p{
+      margin:10px 0;
+      color:#cbd5e1;
+    }
+
+    .socials{
+      margin-top:20px;
+    }
+
+    .socials a{
+      color:white;
+      font-size:28px;
+      margin:0 10px;
+      transition:0.3s;
+    }
+
+    .socials a:hover{
+      color:#38bdf8;
+      transform:scale(1.2);
+    }
+
+    footer{
+      text-align:center;
+      padding:20px;
+      background:#111827;
+      color:#94a3b8;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:768px){
+
+      nav{
+        flex-direction:column;
+        gap:15px;
+      }
+
+      nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+      }
+
+      .hero h2{
+        font-size:35px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav>
+
+    <h1>Omkar Portfolio</h1>
+
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- HERO -->
+
+  <section class="hero" id="home">
+
+    <!-- PROFILE IMAGE LINK -->
+    <!-- इथे तुझा फोटो टाकायचा -->
+
+    <img src="C:\Users\omkar\Pictures\Screenshots\Screenshot 2026-05-19 212635.png" alt="Profile">
+
+    <h2>Hello, I'm <span>Omkar</span></h2>
+
+    <p>
+      Web Developer | UI Designer | Programmer
+    </p>
+
+    <!-- RESUME LINK -->
+    <!-- href मध्ये resume pdf टाकायची -->
+
+    <a href="resume.pdf" class="btn">Download Resume</a>
+
+  </section>
+
+  <!-- ABOUT -->
+
+  <section id="about">
+
+    <h2 class="title">About Me</h2>
+
+    <div class="about">
+
+      <!-- ABOUT IMAGE -->
+
+      <img src="images/about.jpg" alt="About">
+
+      <div class="about-text">
+
+        <p>
+          I am a passionate web developer from Maharashtra.
+        </p>
+
+        <p>
+          I create modern responsive websites using HTML, CSS and JavaScript.
+        </p>
+
+        <p>
+          I also work on Java, Python and SQL projects.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- SKILLS -->
+
+  <section id="skills">
+
+    <h2 class="title">My Skills</h2>
+
+    <div class="skills-container">
+
+      <div class="skill">
+        <i class="fa-brands fa-html5"></i>
+        <h3>HTML</h3>
+      </div>
+
+      <div class="skill">
+        <i class="fa-brands fa-css3-alt"></i>
+        <h3>CSS</h3>
+      </div>
+
+      <div class="skill">
+        <i class="fa-brands fa-js"></i>
+        <h3>JavaScript</h3>
+      </div>
+
+      <div class="skill">
+        <i class="fa-brands fa-java"></i>
+        <h3>Java</h3>
+      </div>
+
+      <div class="skill">
+        <i class="fa-brands fa-python"></i>
+        <h3>Python</h3>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PROJECTS -->
+
+  <section id="projects">
+
+    <h2 class="title">Projects</h2>
+
+    <div class="projects">
+
+      <div class="project-card">
+
+        <!-- PROJECT IMAGE -->
+
+        <img src="images/project1.jpg" alt="">
+
+        <div class="project-content">
+
+          <h3>Portfolio Website</h3>
+
+          <p>
+            Responsive portfolio using HTML CSS JS.
+          </p>
+
+          <!-- PROJECT LINK -->
+
+          <a href="https://github.com/" class="btn">
+            View Project
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="project-card">
+
+        <img src="images/project2.jpg" alt="">
+
+        <div class="project-content">
+
+          <h3>Calculator App</h3>
+
+          <p>
+            Stylish calculator using JavaScript.
+          </p>
+
+          <a href="https://github.com/" class="btn">
+            View Project
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="project-card">
+
+        <img src="images/project3.jpg" alt="">
+
+        <div class="project-content">
+
+          <h3>Gallery Website</h3>
+
+          <p>
+            Dynamic gallery with hover effects.
+          </p>
+
+          <a href="https://github.com/" class="btn">
+            View Project
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- GALLERY -->
+
+  <!-- CONTACT -->
+
+  <section id="contact" class="contact">
+
+    <h2 class="title">Contact Me</h2>
+
+    <p>Email: omkar@example.com</p>
+    <p>Phone: +91 9876543210</p>
+    <p>Location: Maharashtra, India</p>
+
+    <div class="socials">
+
+      <!-- GITHUB LINK -->
+      <a href="https://github.com/">
+        <i class="fa-brands fa-github"></i>
+      </a>
+
+      <!-- LINKEDIN LINK -->
+      <a href="https://linkedin.com/">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+
+      <!-- INSTAGRAM LINK -->
+      <a href="https://instagram.com/">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer>
+    © 2026 Omkar Portfolio | All Rights Reserved
+  </footer>
+
+</body>
+</html>

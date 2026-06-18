@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Image Gallery</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#111;
+      color:#fff;
+      padding:20px;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:20px;
+      font-size:2.5rem;
+    }
+
+    /* FILTER BUTTONS */
+    .filters{
+      text-align:center;
+      margin-bottom:25px;
+    }
+
+    .filters button{
+      padding:10px 18px;
+      margin:5px;
+      border:none;
+      border-radius:25px;
+      background:#333;
+      color:#fff;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .filters button:hover,
+    .filters button.active{
+      background:#ff9800;
+      transform:scale(1.05);
+    }
+
+    /* GALLERY GRID */
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:15px;
+    }
+
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+      border-radius:15px;
+      cursor:pointer;
+    }
+
+    .gallery-item img{
+      width:100%;
+      height:280px;
+      object-fit:cover;
+      display:block;
+      transition:transform 0.5s ease, filter 0.5s ease;
+    }
+
+    /* HOVER EFFECT */
+    .gallery-item:hover img{
+      transform:scale(1.1);
+      filter:brightness(70%);
+    }
+
+    .gallery-item .overlay{
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:100%;
+      padding:15px;
+      background:linear-gradient(transparent, rgba(0,0,0,0.8));
+      color:#fff;
+      opacity:0;
+      transition:0.4s;
+    }
+
+    .gallery-item:hover .overlay{
+      opacity:1;
+    }
+
+    /* LIGHTBOX */
+    .lightbox{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.9);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+    }
+
+    .lightbox img{
+      width:80%;
+      max-width:900px;
+      max-height:80vh;
+      border-radius:10px;
+      animation:zoom 0.4s ease;
+    }
+
+    @keyframes zoom{
+      from{
+        transform:scale(0.7);
+        opacity:0;
+      }
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    .close,
+    .prev,
+    .next{
+      position:absolute;
+      color:white;
+      font-size:35px;
+      cursor:pointer;
+      user-select:none;
+      transition:0.3s;
+    }
+
+    .close:hover,
+    .prev:hover,
+    .next:hover{
+      color:#ff9800;
+    }
+
+    .close{
+      top:20px;
+      right:30px;
+    }
+
+    .prev{
+      left:30px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    .next{
+      right:30px;
+      top:50%;
+      transform:translateY(-50%);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      .lightbox img{
+        width:95%;
+      }
+
+      h1{
+        font-size:2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Responsive Image Gallery</h1>
+
+  <!-- FILTER BUTTONS -->
+  <div class="filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="nature">Nature</button>
+    <button data-filter="city">City</button>
+    <button data-filter="animals">Animals</button>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery">
+
+    <div class="gallery-item nature">
+      <img src="https://picsum.photos/id/1015/600/400" alt="">
+      <div class="overlay">Nature</div>
+    </div>
+
+    <div class="gallery-item city">
+      <img src="https://picsum.photos/id/1011/600/400" alt="">
+      <div class="overlay">City</div>
+    </div>
+
+    <div class="gallery-item animals">
+      <img src="https://picsum.photos/id/1025/600/400" alt="">
+      <div class="overlay">Animals</div>
+    </div>
+
+    <div class="gallery-item nature">
+      <img src="https://picsum.photos/id/1039/600/400" alt="">
+      <div class="overlay">Nature</div>
+    </div>
+
+    <div class="gallery-item city">
+      <img src="https://picsum.photos/id/1043/600/400" alt="">
+      <div class="overlay">City</div>
+    </div>
+
+    <div class="gallery-item animals">
+      <img src="https://picsum.photos/id/1062/600/400" alt="">
+      <div class="overlay">Animals</div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <span class="close">&times;</span>
+    <span class="prev">&#10094;</span>
+    <img src="" alt="" id="lightbox-img">
+    <span class="next">&#10095;</span>
+  </div>
+
+  <script>
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    const closeBtn = document.querySelector(".close");
+    const prevBtn = document.querySelector(".prev");
+    const nextBtn = document.querySelector(".next");
+
+    let currentIndex = 0;
+    let images = [];
+
+    // Collect image sources
+    galleryItems.forEach((item, index) => {
+      images.push(item.querySelector("img").src);
+
+      item.addEventListener("click", () => {
+        currentIndex = index;
+        showImage();
+        lightbox.style.display = "flex";
+      });
+    });
+
+    // Show image in lightbox
+    function showImage(){
+      lightboxImg.src = images[currentIndex];
+    }
+
+    // Next image
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage();
+    });
+
+    // Previous image
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage();
+    });
+
+    // Close lightbox
+    closeBtn.addEventListener("click", () => {
+      lightbox.style.display = "none";
+    });
+
+    // Close when clicking outside image
+    lightbox.addEventListener("click", (e) => {
+      if(e.target !== lightboxImg){
+        lightbox.style.display = "none";
+      }
+    });
+
+    // FILTER FUNCTIONALITY
+    const filterButtons = document.querySelectorAll(".filters button");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+
+        // Active button
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const filter = button.getAttribute("data-filter");
+
+        galleryItems.forEach(item => {
+          if(filter === "all" || item.classList.contains(filter)){
+            item.style.display = "block";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
